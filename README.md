@@ -1,5 +1,5 @@
 # AdressCalculator
-<b>PL Description</b>
+<b>EN/PL Description</b>
 
 The program was created as part of a project for studies. The program's task is to calculate and show information on: <br/>
 1) decimal IP address<br/>
@@ -18,6 +18,8 @@ The program was created as part of a project for studies. The program's task is 
 
 AS AN ARGUMENT, THE PROGRAM HAS AN IP ADDRESS E.G. 120.43.233.120/32 (IP + / mask) <br/>
 A regular expression was used to validate the address.
+
+<hr>
 
 Program został stworzony w ramach projektu na studia. Zadaniem programu jest wyliczenie i ukazanie informacji dotyczących: <br/>
 1) adresu IP zapisanego dziesiętnie<br/>

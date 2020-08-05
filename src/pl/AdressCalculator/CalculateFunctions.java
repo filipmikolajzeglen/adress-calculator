@@ -1,20 +1,16 @@
 package pl.AdressCalculator;
 
-// ZMIENNE POSIADAJĄ KOŃCÓWKI NAZW BIN I DEC W ZALEŻNOŚCI OD TEGO CZY PRZECHOWUJĄ WARTOŚCI
-// BINARNE CZY DZIESIĘTNE
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CalculateFunctions {
-
-    // 0. Rozbija informacje o adresie ip i je porządkuje
-    // JAKO ARGUMENT PRZYJMUJE ADRES IP NP. 120.43.233.120/32
-    void breakAdress(String ipAdress) {
-        // A. Rozbijamy adres na 4 oktety i maskę
-        String[] ip = splitAdress(ipAdress);
-        //lelelelle
-        // B. Wykorzystując utworzone metody, obliczamy wyniki i zapisujemy w zmiennych
+    
+    // 0. Breaks down information about an ip address and arranges it
+    // AS AN ARGUMENT IT IS ADDRESSED E.G. 120.43.233.120/32
+    void breakAdress(String ipAdress) {      
+        // A. We break the address into 4 octets and a mask
+        String[] ip = splitAdress(ipAdress);       
+        // B. Using the created methods, calculate the results and save them in variables
         String ipAdressBin = makeBin(ip);
         String ipAdressDec = linkAdress(ip);
         String maskBin = makeBinMask(ip[4]);
@@ -29,8 +25,8 @@ public class CalculateFunctions {
         String lastHost = lastAdressOfHost(broadcastAdress);
         String allHosts = allHosts(ip[4]);
 
-        // C. Przekazujemy obliczone wartości do wyświetlenia na ekranie i wywołujemy
-        // metodę checkIfAdressIPisCorrect do sprawdzenia poprawności adresu.
+        // C. Transfer the calculated values to display on the screen and execute
+        // checkIfAdressIPisCorrect method to check if the address is correct.
         checkIfIpAdressIsCorrect(ipAdress);
         System.out.println("\n\n---- ALL IP (DEC) DATA ------------------------------" +
                 "\nIP ADRESS: " + ipAdressDec +
@@ -50,29 +46,29 @@ public class CalculateFunctions {
 
     }
 
-    // 1. Rozbija adress ip na oktety i maskę sieci
-    // JAKO ARGUMENT PRZYJMUJE ADRES IP DO ROZBICIA NA OKTETY I MASKE
+    // 1. Breaks down the ip address into octets and netmask
+    // AS AN ARGUMENT TAKES THE IP ADDRESS TO BE BREAKDOWN INTO OCTETS AND MASKE
     private String[] splitAdress(String ipAdress) {
         String[] ip = ipAdress.split("[./]");
         return ip;
     }
-
-    // 2. Łączy rozbity adress ip w jedno (bez skróconej maski)
-    // JAKO ARGUMENT PRZYJMUJE TABLICĘ STRINGÓW, KTÓRA ŁĄCZY SIĘ W JEDEN ŁAŃCUCH ZNAKÓW
+    
+    // 2. Combine broken ip address into one (no shortened mask)
+    // AS AN ARGUMENT HAS ADOPTED AN ARRAY OF STRINGS THAT COMBINES INTO ONE CHAIN OF CHARACTERS
     private String linkAdress(String[] adress) {
         String linkAdress = adress[0] + "." + adress[1] + "." + adress[2] + "." + adress[3];
         return linkAdress;
     }
 
-    // 3. Łączy rozbity adress ip w jedno (bez skróconej maski)
-    // JAKO ARGUMENT PRZYJMUJE TABLICĘ STRINGÓW, KTÓRA ŁĄCZY SIĘ W JEDEN ŁAŃCUCH ZNAKÓW (Zamiana na postać binarną)
+    // 3. Concatenate the broken ip address into one (no shortened mask)
+    // AS AN ARGUMENT HAS ADOPTED AN ARRAY OF STRINGS THAT COMBINES INTO ONE CHARACTER (Converted to binary)
     private String makeBin(String[] adress) {
         String linkAdress = decToBin(adress[0]) + "." + decToBin(adress[1]) + "." + decToBin(adress[2]) + "." + decToBin(adress[3]);
         return linkAdress;
     }
 
-    // 4. Zamienia liczby dziesiętne na binarne
-    // JAKO ARGUMENT PRZYJMUJE POJEDYNCZY OKTET LICZBY DZIESIĘTNEJ I ZAMIENIA GO NA LICZBĘ BINARNĄ
+    // 4. Convert decimal numbers to binary
+    // AS AN ARGUMENT TAKES A SINGLE DECIMAL OCTET AND CONVERSES IT TO A BINARY
     private String decToBin(String ipAdress) {
         int dec = Integer.parseInt(ipAdress);
         String bin = Integer.toBinaryString(dec);
@@ -82,15 +78,15 @@ public class CalculateFunctions {
         return bin;
     }
 
-    // 5. Zamienia pojedyncze liczby binarne na dziesiętne
-    // JAKO ARGUMENT PRZYJMUJE POJEDYNCZY OKTET LICZBY BINARNEJ I ZAMIENIA GO NA LICZBĘ DZIESIĘTNĄ
+    // 5. Convert single binary numbers to decimals
+    // AS AN ARGUMENT TAKES A SINGLE OCTET OF A BINARY NUMBER AND CONVERSES IT TO A DECIMAL
     private int binToDec(String ipAdress) {
         int dec = Integer.parseInt(ipAdress, 2);
         return dec;
     }
 
-    // 6. Tworzy adres maski w oparciu o skróconą maskę np.: /23
-    // JAKO ARGUMENT PRZYJMUJE SKRÓCONĄ MASKĘ I NA JEJ PODSTAWIE TWORZY ADRES BINARNY
+    // 6.1. Builds the address of the mask based on the truncated mask, eg: / 23
+    // AS AN ARGUMENT TAKES A SHORT MASK AND CREATES A BINARY ADDRESS ON THE BASIS OF THIS MASK
     private String makeBinMask(String shortMask) {
         String maskBin = "1";
         int parseShortMask = Integer.parseInt(shortMask);
@@ -107,8 +103,8 @@ public class CalculateFunctions {
         return maskBin;
     }
 
-    // 6. Tworzy odwrócony adres maski w oparciu o skróconą maskę np.: /23 (Potrzebne do obliczenia adresu rozgłoszeniowgo)
-    // JAKO ARGUMENT PRZYJMUJE SKRÓCONĄ MASKĘ I NA JEJ PODSTAWIE TWORZY ADRES BINARNY
+    // 6.2. Creates an inverted mask address based on a short mask, e.g .: / 23 (Needed to compute the broadcast address)
+    // AS AN ARGUMENT TAKES A SHORT MASK AND CREATES A BINARY ADDRESS ON THE BASIS OF THIS MASK
     private String makeReverseBinMask(String shortMask) {
         String maskBin = "0";
         int parseShortMask = Integer.parseInt(shortMask);
@@ -125,16 +121,17 @@ public class CalculateFunctions {
         return maskBin;
     }
 
-    // 7. Tworzy pełen adres maski w postaci dziesiętnej
-    // JAKO ARGUMENT PRZYJMUJE BINARNĄ WARTOSC I NA JEJ PODSTAWIE TWORZY DZIESIĘTNĄ
+    // 7. Builds full mask address as decimal
+    // AS AN ARGUMENT TAKES A BINARY VALUE AND ON IT'S BASIS FOR A DECIMAL
     private String makeDecMask(String mask) {
         String[] maskSplit = splitAdress((mask));
         String fullDecMask = binToDec(maskSplit[0]) + "." + binToDec(maskSplit[1]) + "." + binToDec(maskSplit[2]) + "." + binToDec(maskSplit[3]);
         return fullDecMask;
     }
 
-    // 8. Wyznacza klasę sieci
-    // JAKO ARGUMENT PRZYJMUJE ADRES MASKI W POSTACI DZIESIĘTNEJ I WYZNACZA KLASĘ MASKI
+
+    // 8. Determine the network class
+    // AS AN ARGUMENT, IT TAKES A DECIMAL MASK ADDRESS AND DETERMINES THE CLASS OF THE MASK
     private String classAdress(String ipAdress) {
         String[] adressSplit = splitAdress(ipAdress);
         String[] adressClasses = {"A", "B", "C", "D"};
@@ -149,8 +146,8 @@ public class CalculateFunctions {
         return adressClass;
     }
 
-    // 9. Wyznacza adres sieciowy
-    // JAKO ARGUMENT PRZYJMUJE ADRES IP BIN i ADRES MASKI BIN
+    // 9. Designate the network address
+    // AS AN ARGUMENT IT IS ADDRESS BIN IP ADDRESS AND MASK ADDRESS BIN
     private String adressNetwork(String ipBin, String maskBin) {
         String[] octetsIp = splitAdress(ipBin);
         String[] octetsMask = splitAdress(maskBin);
@@ -169,9 +166,9 @@ public class CalculateFunctions {
         }
         return networkAdress;
     }
-
-    // 10. Wyznacza adres rozgłoszeniowy
-    // JAKO ARGUMENT PRZYJMUJE ADRES SIECIOWY i ADRES ODWROCONEJ MASKI BIN
+    
+    // 10. Designate a broadcast address
+    // AS AN ARGUMENT TAKES THE NETWORK ADDRESS AND ADDRESS OF REVERSE BIN MASK
     private String broadcastAdress(String adressNetwork, String reverseMaskBin) {
         String[] reverseMask = splitAdress(makeDecMask(reverseMaskBin));
         String[] adressNet = splitAdress(adressNetwork);
@@ -187,8 +184,8 @@ public class CalculateFunctions {
         return broadcastAdress;
     }
 
-    // 11. Wyznacza pierwszego hosta
-    // JAKO ARGUMENT PRZYJMUJE ADRES SIECIOWY
+    // 11. Designate the first host
+    // TAKE A NETWORK ADDRESS AS AN ARGUMENT
     private String firstAdressOfHost(String networkAdress) {
         String[] netAdress = splitAdress(networkAdress);
         String firstHost;
@@ -200,8 +197,8 @@ public class CalculateFunctions {
         return firstHost;
     }
 
-    // 12. Wyznacza ostatniego hosta
-    // JAKO ARGUMENT PRZYJMUJE ADRES ROZGŁOSZENIOWY
+    // 12. Designate the last host
+    // AS AN ARGUMENT TAKES THE PUBLIC ADDRESS
     private String lastAdressOfHost(String broadcastAdress) {
         String[] netAdress = splitAdress(broadcastAdress);
         String lastHost;
@@ -213,8 +210,8 @@ public class CalculateFunctions {
         return lastHost;
     }
 
-    // 13. Wyznacza LICZBĘ WSZYSTKICH HOSTÓW
-    // JAKO ARGUMENT PRZYJMUJE SKRÓCONĄ MASKĘ
+    // 13. Designates the NUMBER OF ALL HOSTS
+    // AS AN ARGUMENT IS ADOPTED THE SHORT MASK
     private String allHosts(String shortMask) {
         int sMask = Integer.parseInt(shortMask);
         double allhosts = Math.pow(2, 32 - sMask);
@@ -223,9 +220,9 @@ public class CalculateFunctions {
         return hosts;
     }
 
-    // 14. Sprawdza poprawność wprowadzonego adresu
-    // JAKO ARGUMENT PRZYJMUJE DOWOLNY STRING WPROWADZONY Z KLAWIATURY. O JEGO PRAWIDŁOWOŚCI MÓWI WYRAŻENIE REGULARNE,
-    // KTÓRE SPRAWDZA POPRAWNOŚĆ WPROWADZONYCH DANYCH.
+    // 14. Checks the correctness of the entered address
+    // AS AN ARGUMENT TAKES ANY STRING ENTERED FROM THE KEYPAD. ITS REGULAR EXPRESSION IS ABOUT ITS CORRECTNESS,
+    // WHICH CHECKS THE CORRECTNESS OF ENTERED DATA.
     private void checkIfIpAdressIsCorrect(String ipAdress) {
         Pattern compiledPattern = Pattern.compile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\/([1-9]|[1-2][0-9]|3[0-2])$");
         Matcher matcher = compiledPattern.matcher(ipAdress);

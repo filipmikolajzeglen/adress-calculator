@@ -2,8 +2,7 @@
 <b>PL Description</b>
 
 The program was created as part of a project for studies. The program's task is to calculate and show information on: <br/>
-
-1 )decimal IP address<br/>
+1) decimal IP address<br/>
 2) binary IP address<br/>
 3) Network address in decimal<br/>
 4) Network address in binary<br/>

@@ -1,4 +1,4 @@
-# AdressCalculator
+# Adress calculator
 <b>EN/PL Description</b>
 
 The program was created as a part of a project for studies. The program's task is to calculate and show information on: <br/>
